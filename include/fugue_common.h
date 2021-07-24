@@ -145,7 +145,11 @@ namespace fugue
       uint8_t *buf = message.GetBufferPointer();
       size_t size = message.GetSize();
 
+#ifdef _WIN32
+      ssize_t result = _write(fd, buf, size);
+#else
       ssize_t result = write(fd, buf, size);
+#endif
       if (static_cast<size_t>(result) == size) {
         success = true;
       } else {
@@ -154,7 +158,7 @@ namespace fugue
         char errbuf[80] = { 0 };
 
 #ifdef _WIN32
-        bool ok = 0 == _strerror_s(errbuf, sizeof(errbuf));
+        bool ok = 0 == _strerror_s(errbuf, nullptr);
 #else
         bool ok = 0 == strerror_r(errno, errbuf, sizeof(errbuf));
 #endif
