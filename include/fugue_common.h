@@ -11,6 +11,7 @@
 #include <fugue_generated.h>
 
 #ifdef _WIN32
+#define NOMINMAX 1
 #include <windows.h>
 #include <shlwapi.h>
 #include <io.h>
