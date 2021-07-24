@@ -27,6 +27,8 @@ flatbuffers_generate_headers(
   SCHEMAS ${fugueschema_SOURCE_DIR}/fugue.fbs
 )
 
+include_directories(${CMAKE_CURRENT_BUILD_DIR}/schema)
+
 add_ida_plugin(fugue
   ${CMAKE_CURRENT_SOURCE_DIR}/src/core.cc
 )

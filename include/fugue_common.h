@@ -8,7 +8,7 @@
 #include <exception>
 #include <vector>
 
-#include <schema/fugue_generated.h>
+#include <fugue_generated.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -42,6 +42,7 @@ namespace fugue
     Id() : id{std::numeric_limits<uint32_t>::max()} {}
     Id(uint32_t id) : id{id} {}
 
+    inline size_t index() const { return id; }
     inline uint32_t value() const { return id; }
 
     friend bool operator<(const Id<T> &l, const Id<T> &r)
@@ -65,6 +66,7 @@ namespace fugue
     Id() : id(std::numeric_limits<uint64_t>::max()) {}
     Id(const Id<Function> &fid, uint32_t id) : id(static_cast<uint64_t>(fid.value()) << 32ULL | id) {}
 
+    inline size_t index() const { return id & 0xffffffffULL; }
     inline uint64_t value() const { return id; }
 
     friend bool operator<(const Id<BasicBlock> &l, const Id<BasicBlock> &r)
@@ -114,7 +116,7 @@ namespace fugue
   class ProjectBuilder
   {
   public:
-    ProjectBuilder() : arches{}, message{} {}
+    ProjectBuilder() : arches{}, message{1024} {}
 
     bool write_to_file(const std::string &path)
     {
@@ -212,21 +214,23 @@ namespace fugue
 
     inline void reserve_function_blocks(size_t amount)
     {
+      function_blocks.clear();
       function_blocks.resize(amount);
     }
 
     inline void reserve_function_refs(size_t amount)
     {
+      function_refs.clear();
       function_refs.resize(amount);
     }
 
     inline void set_function(Id<Function> id, const std::string &symbol, uint64_t address, Id<BasicBlock> entry)
     {
       auto symbol_str = message.CreateString(symbol);
-      auto fblocks = message.CreateVector(function_blocks);
-      auto frefs = message.CreateVector(function_refs);
+      auto fblocks = message.CreateVector(function_blocks.data(), std::size(function_blocks));
+      auto frefs = message.CreateVector(function_refs.data(), std::size(function_refs));
 
-      functions[id.value()] = fugue::schema::CreateFunction(
+      functions[id.index()] = fugue::schema::CreateFunction(
           message,
           symbol_str,
           address,
@@ -238,20 +242,20 @@ namespace fugue
 
     inline void reserve_block_succs(size_t amount)
     {
-      block_succs.resize(amount);
+      block_succs = std::vector<flatbuffers::Offset<fugue::schema::IntraRef>>(amount);
     }
 
     inline void reserve_block_preds(size_t amount)
     {
-      block_preds.resize(amount);
+      block_preds = std::vector<flatbuffers::Offset<fugue::schema::IntraRef>>(amount);
     }
 
     inline void set_block(Id<BasicBlock> bid, uint64_t address, uint32_t size, Id<Architecture> arch)
     {
-      auto bpreds = message.CreateVector(block_preds);
-      auto bsuccs = message.CreateVector(block_succs);
+      auto bpreds = message.CreateVector(block_preds.data(), std::size(block_preds));
+      auto bsuccs = message.CreateVector(block_succs.data(), std::size(block_succs));
 
-      function_blocks[bid.value()] = fugue::schema::CreateBasicBlock(
+      function_blocks[bid.index()] = fugue::schema::CreateBasicBlock(
           message,
           address,
           size,
@@ -310,10 +314,10 @@ namespace fugue
       auto *proj = fugue::schema::GetProject(message.GetBufferPointer());
 
       auto fns = proj->functions();
-      for (auto fn = std::begin(fns); fn != std::end(fns); ++fn)
+      for (auto fn = fns->begin(); fn != fns->end(); ++fn)
       {
         auto symbol = fn->symbol();
-        auto s = symbol.c_str();
+        auto s = symbol->c_str();
         ss << s << std::endl;
       }
       return ss.str();
@@ -347,7 +351,7 @@ namespace fugue
         bool executable)
     {
       auto name_str = message.CreateString(name);
-      segments[id.value()] = fugue::schema::CreateSegment(
+      segments[id.index()] = fugue::schema::CreateSegment(
           message,
           name_str,
           address,
@@ -374,7 +378,7 @@ namespace fugue
         auto processor = message.CreateString(arch.processor);
         auto variant = message.CreateString(arch.variant);
 
-        architectures[id.value()] = fugue::schema::CreateArchitecture(
+        architectures[id.index()] = fugue::schema::CreateArchitecture(
             message,
             processor,
             arch.is_be,

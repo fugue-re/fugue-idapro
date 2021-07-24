@@ -1,3 +1,0 @@
-repository='external project URL'
-module='https://github.com/fugue-re/fugue-db-schema/archive/master.zip'
-tag=''
