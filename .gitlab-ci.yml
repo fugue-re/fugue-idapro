@@ -1,0 +1,14 @@
+image:
+  name: xorpse/windev:15
+  entrypoint: [""]
+
+build:
+  stage: build
+  script:
+    - mkdir -p build
+    - vcwine cmake -DCMAKE_BUILD_TYPE=Release -B build
+    - vcwine cmake --build build
+  artifacts:
+    paths:
+      - build/fugue.dll
+      - build/fugue64.dll

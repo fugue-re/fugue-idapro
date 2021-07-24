@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/CMakeFiles/flatbuffers-populate"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/CMakeFiles/flatbuffers-populate.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/CMakeFiles/flatbuffers-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-build.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-download.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-install.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-test.rule"
+		},
+		{
+			"file" : "/Users/slt/Projects/fugue-idapro/build/_deps/flatbuffers-subbuild/flatbuffers-populate-prefix/src/flatbuffers-populate-stamp/flatbuffers-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"flatbuffers-populate"
+		],
+		"name" : "flatbuffers-populate"
+	}
+}

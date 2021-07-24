@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -std=c++11 -stdlib=libc++ -Wall -pedantic -Werror -Wextra -Wno-unused-parameter -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/flathash.dir/src/flathash.cpp.o -o flathash 

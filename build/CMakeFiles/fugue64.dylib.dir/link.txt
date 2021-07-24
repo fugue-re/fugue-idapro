@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -O3 -DNDEBUG -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk -bundle -Wl,-headerpad_max_install_names -o fugue64.dylib CMakeFiles/fugue64.dylib.dir/src/core.cc.o  -Wl,-flat_namespace -Wl,-undefined,warning -Wl,-exported_symbol,_PLUGIN _deps/flatbuffers-build/libflatbuffers.a 

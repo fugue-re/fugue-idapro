@@ -1,0 +1,16 @@
+[package]
+name = "fugue-idapro"
+version = "0.1.1"
+authors = ["Sam Thomas <st@xv.ax>"]
+edition = "2018"
+license = "MIT"
+
+[lib]
+path = "rust/lib.rs"
+
+[dependencies]
+fugue-db = { version = "0.1", registry = "fugue" }
+tempfile = "3"
+thiserror = "1"
+which = "4"
+url = "2.2"

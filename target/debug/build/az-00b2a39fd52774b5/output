@@ -1,0 +1,6 @@
+$ mkdir -p "/Users/slt/Projects/fugue-idapro/target/debug/build/az-00b2a39fd52774b5/out/try_track_caller"
+$ cd "/Users/slt/Projects/fugue-idapro/target/debug/build/az-00b2a39fd52774b5/out/try_track_caller"
+$ printf '%s' "// try_tra"... > "/Users/slt/Projects/fugue-idapro/target/debug/build/az-00b2a39fd52774b5/out/try_track_caller/try_track_caller.rs"
+$ "rustc" "try_track_caller.rs" "--emit=dep-info,metadata" >& /dev/null
+cargo:rustc-cfg=track_caller
+$ rm -r "/Users/slt/Projects/fugue-idapro/target/debug/build/az-00b2a39fd52774b5/out/try_track_caller"

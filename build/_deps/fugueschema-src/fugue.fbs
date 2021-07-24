@@ -1,0 +1,86 @@
+namespace fugue.schema;
+
+table Architecture {
+  processor:string;
+  endian:bool;
+  bits:uint32;
+  variant:string;
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table Segment {
+  name:string;
+  address:uint64;
+  size:uint32;
+
+  address_size:uint32;
+  alignment:uint32;
+  bits:uint32;
+  endian:bool;
+
+  code:bool;
+  data:bool;
+  external:bool;
+
+  readable:bool;
+  writable:bool;
+  executable:bool;
+
+  bytes:[ubyte];
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table InterRef {
+  address:uint64;
+  source:uint32 = 0xffffffff;
+  target:uint32;
+  call:bool;
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table IntraRef {
+  source:uint64;
+  target:uint64;
+  function:uint32;
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table BasicBlock {
+  address:uint64;
+  size:uint32;
+  architecture:uint32 = 0;
+  predecessors:[IntraRef];
+  successors:[IntraRef];
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table Function {
+  symbol:string;
+  address:uint64;
+  entry:uint64;
+  blocks:[BasicBlock];
+  references:[InterRef];
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table Metadata {
+  input_format:string;
+  input_path:string;
+  input_md5:[ubyte];
+  input_sha256:[ubyte];
+  input_size:uint32;
+  exporter:string;
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+table Project {
+  architectures:[Architecture];
+  segments:[Segment];
+  functions:[Function];
+  metadata:Metadata;
+  auxiliary:[ubyte] (flexbuffer);
+}
+
+file_identifier "FuDb";
+file_extension "fdb";
+root_type Project;

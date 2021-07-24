@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libflatbuffers.a CMakeFiles/flatbuffers.dir/src/idl_parser.cpp.o CMakeFiles/flatbuffers.dir/src/idl_gen_text.cpp.o CMakeFiles/flatbuffers.dir/src/reflection.cpp.o CMakeFiles/flatbuffers.dir/src/util.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libflatbuffers.a
