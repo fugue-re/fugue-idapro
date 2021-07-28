@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  docker:
+  build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,13 +19,13 @@ jobs:
     - name: build
       run: |
         mkdir -p build
-        cmake -DCMAKE_BUILD_TYPE=Release -B build
-        cmake --build build
+        cmake -B build
+        cmake --build build --config Release
         
     - name: exporting artefacts
       uses: actions/upload-artifact@v2
       with:
         name: fugue-plugins
         path: |
-          build/fugue.dll
-          build/fugue64.dll
+          build\Release\fugue.dll
+          build\Release\fugue64.dll
