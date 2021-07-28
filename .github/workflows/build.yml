@@ -1,0 +1,29 @@
+name: build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: initialising docker environment
+      uses: docker://xorpse/windev:15
+      with:
+        entrypoint: ""
+    - name: building inside docker environment
+      run: |
+        mkdir -p build
+        vcwine cmake -DCMAKE_BUILD_TYPE=Release -B build
+        vcwine cmake --build build
+    - name: exporting artefacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: fugue-plugins
+        path: |
+          build/fugue.dll
+          build/fugue64.dll
