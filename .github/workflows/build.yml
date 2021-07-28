@@ -8,18 +8,20 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: initialising docker environment
-      uses: docker://xorpse/windev:15
       with:
-        entrypoint: ""
-    - name: building inside docker environment
+        submodules: 'recursive'
+        
+    - uses: jwlawson/actions-setup-cmake@v1.9
+    
+    - name: build
       run: |
         mkdir -p build
-        vcwine cmake -DCMAKE_BUILD_TYPE=Release -B build
-        vcwine cmake --build build
+        cmake -DCMAKE_BUILD_TYPE=Release -B build
+        cmake --build build
+        
     - name: exporting artefacts
       uses: actions/upload-artifact@v2
       with:
